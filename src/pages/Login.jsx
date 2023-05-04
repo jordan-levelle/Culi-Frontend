@@ -1,4 +1,4 @@
-import GoogleLogin from "../components/GoogleLogin"
+import GoogleLogin from "../components/authentication/GoogleLogin"
 
 const Login = () => {
   return (

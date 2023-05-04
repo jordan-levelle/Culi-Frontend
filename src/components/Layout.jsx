@@ -1,10 +1,14 @@
 import { Outlet } from "react-router-dom";
-import Nav from "./Nav";
+
+import { Container } from "@mantine/core";
+
+import Nav from "./header/Nav";
 
 const Layout = () => {
 	return (
 		<>
 			<Nav />
+			<Container mt={100}></Container>
 			<Outlet />
 		</>
 	);

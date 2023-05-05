@@ -14,8 +14,7 @@ const UserAvatar = () => {
 	const isAuthenticated = useSelector(selectIsAuthenticated);
 	const { username, profilePicture } = useSelector(selectProfile);
 
-	const [logout, { isLoading }] =
-		useLogoutMutation();
+	const [logout, { isLoading }] = useLogoutMutation();
 
 	const handleLogout = async () => {
 		try {
@@ -42,10 +41,10 @@ const UserAvatar = () => {
 		content = (
 			<Flex align='center' gap={6}>
 				<Link to='/signup'>
-					<Button variant='gradient'>Signup</Button>
+					<Button variant='gradient'>Sign Up</Button>
 				</Link>
 				<Link to='/login'>
-					<Button variant='outline'>Login</Button>
+					<Button variant='outline'>Log In</Button>
 				</Link>
 			</Flex>
 		);

@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { useSendLoginMutation } from "../../app/api/authApiSlice";
+import {
+	useSendLoginMutation,
+	useLogoutMutation,
+} from "../../app/api/authApiSlice";
 
 import { Button, Image } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import GoogleLogoUrl from "../../assets/GoogleLogo.svg";
 
 import Spinner from "../Spinner";
@@ -13,6 +17,7 @@ const GoogleLogin = () => {
 	const navigate = useNavigate();
 
 	const [sendLogin, { isLoading }] = useSendLoginMutation();
+	const [logout] = useLogoutMutation();
 
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
@@ -23,11 +28,29 @@ const GoogleLogin = () => {
 			await sendLogin({ token });
 			navigate("/");
 		} catch (error) {
-			console.error(error);
+			let message = "";
+			switch (error.code) {
+				case "auth/popup-blocked":
+					message = "Please allow popups to continue";
+					break;
+				case "auth/popup-closed-by-user":
+					message = "You have closed the Google Login popup, please try again";
+					break;
+				default:
+					message = "There is an error, please try again";
+					break;
+			}
+			notifications.show({
+				title: "Error Logging In",
+				message,
+				color: "red",
+				withCloseButton: true,
+				autoClose: 5000,
+			});
+			await signOut(auth);
+			await logout();
 		}
 	};
-
-	let content = null;
 
 	if (isLoading) {
 		return <Spinner />;

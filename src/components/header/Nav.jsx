@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import {
 	createStyles,
 	Header,
@@ -6,9 +7,9 @@ import {
 	Group,
 	Burger,
 	rem,
+	Menu,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link } from "react-router-dom";
 
 import Logo from "../Logo";
 import UserAvatar from "./UserAvatar";
@@ -21,7 +22,7 @@ const useStyles = createStyles((theme) => ({
 		height: "100%",
 	},
 
-	links: {
+	small: {
 		[theme.fn.smallerThan("xs")]: {
 			display: "none",
 		},
@@ -67,14 +68,14 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const links = [
-  { label: "Home", link: "/" },
-  { label: "Profile", link: "/profile" },
+	{ label: "Home", link: "/" },
+	{ label: "Profile", link: "/profile" },
 ];
-
 
 const Nav = () => {
 	const [opened, { toggle }] = useDisclosure(false);
-	const [active, setActive] = useState(links[0].link);
+	const path = useLocation().pathname;
+	const navigate = useNavigate();
 	const { classes, cx } = useStyles();
 
 	const items = links.map((link) => (
@@ -82,35 +83,45 @@ const Nav = () => {
 			key={link.label}
 			to={link.link}
 			className={cx(classes.link, {
-				[classes.linkActive]: active === link.link,
+				[classes.linkActive]: path === link.link,
 			})}
-			onClick={() => {
-				setActive(link.link);
-			}}
 		>
 			{link.label}
 		</Link>
 	));
 
 	return (
-		<Header height={60} className="fixed top-0">
+		<Header height={60} className='fixed top-0'>
 			<Container className={classes.header}>
-				<Logo />
-				<Group spacing={5} className={classes.links}>
+				<Menu shadow='lg' onClose={toggle} width='50vw'>
+					<Menu.Target>
+						<Burger
+							opened={opened}
+							onClick={toggle}
+							className={classes.burger}
+							size='sm'
+						/>
+					</Menu.Target>
+
+					<Menu.Dropdown mt={12}>
+						{items.map((item) => (
+							<Menu.Item key={item.label}>{item}</Menu.Item>
+						))}
+					</Menu.Dropdown>
+				</Menu>
+
+				<div onClick={() => navigate("/")} className="hover:cursor-pointer">
+					<Logo />
+				</div>
+
+				<Group spacing={5} className={classes.small}>
 					{items}
 				</Group>
 
 				<UserAvatar />
-
-				<Burger
-					opened={opened}
-					onClick={toggle}
-					className={classes.burger}
-					size='sm'
-				/>
 			</Container>
 		</Header>
 	);
-}
+};
 
 export default Nav;

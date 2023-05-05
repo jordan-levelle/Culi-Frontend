@@ -1,17 +1,17 @@
-import { useState } from "react";
-
 import { Container, Stepper } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
+
+import { Box } from "@mantine/core";
 
 import EmailSignup from "../components/authentication/EmailSignup";
 import EmailVerification from "../components/authentication/EmailVerification";
-import Login from "./Login";
+import EmailLogin from "../components/authentication/EmailLogin";
 
 const Signup = () => {
-	const [active, setActive] = useState(0);
-	const nextStep = () =>
-		setActive((current) => (current < 3 ? current + 1 : current));
-	const prevStep = () =>
-		setActive((current) => (current > 0 ? current - 1 : current));
+	const [active, setActive] = useLocalStorage({
+		key: "activeStep",
+		defaultValue: 0,
+	});
 
 	return (
 		<Container>
@@ -22,13 +22,15 @@ const Signup = () => {
 				color='green'
 			>
 				<Stepper.Step label='Create Account'>
-					<EmailSignup />
+					<EmailSignup setActive={setActive} />
 				</Stepper.Step>
 				<Stepper.Step label='Verify Email'>
-					<EmailVerification />
+					<EmailVerification setActive={setActive} />
 				</Stepper.Step>
 				<Stepper.Step label='Login'>
-					<Login />
+					<Box className='rounded-lg shadow-lg p-8' maw={400} mx='auto' mt={20}>
+						<EmailLogin />
+					</Box>
 				</Stepper.Step>
 				<Stepper.Completed>
 					Completed, click back button to get to previous step

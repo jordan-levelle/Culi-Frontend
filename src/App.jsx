@@ -17,8 +17,8 @@ const App = () => {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			if (user) {
-				user.getIdToken(true).then((token) => {
-					sendLogin({ token });
+				user.getIdToken(true).then(async (token) => {
+					await sendLogin({ token });
 				});
 			} else {
 				console.log("No user");

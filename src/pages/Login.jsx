@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
 	Paper,
@@ -56,7 +56,7 @@ const Login = () => {
 				</Title>
 				<EmailLogin />
 				<Text ta='center' mt='md'>
-					Don&apos;t have an account?{" "}
+					Don&apos;t have an account?&nbsp;
 					<Link to={"/signup"} className={classes.link}>
 						Register
 					</Link>

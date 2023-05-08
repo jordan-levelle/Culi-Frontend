@@ -22,7 +22,7 @@ import { notifications } from "@mantine/notifications";
 import Logo from "../Logo";
 import Spinner from "../Spinner";
 
-const EmailLogin = () => {
+const EmailLogin = ({ removeActive }) => {
 	const navigate = useNavigate();
 
 	const form = useForm({
@@ -61,6 +61,9 @@ const EmailLogin = () => {
 			}
 			const token = await user.getIdToken(true);
 			await sendLogin({ token });
+			if (removeActive) {
+				removeActive();
+			}
 			navigate("/");
 		} catch (error) {
 			let message = "";

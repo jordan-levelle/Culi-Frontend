@@ -8,7 +8,7 @@ import EmailVerification from "../components/authentication/EmailVerification";
 import EmailLogin from "../components/authentication/EmailLogin";
 
 const Signup = () => {
-	const [active, setActive] = useLocalStorage({
+	const [active, setActive, removeActive] = useLocalStorage({
 		key: "activeStep",
 		defaultValue: 0,
 	});
@@ -29,7 +29,7 @@ const Signup = () => {
 				</Stepper.Step>
 				<Stepper.Step label='Login'>
 					<Box className='rounded-lg shadow-lg p-8' maw={400} mx='auto' mt={20}>
-						<EmailLogin />
+						<EmailLogin removeActive={removeActive}/>
 					</Box>
 				</Stepper.Step>
 				<Stepper.Completed>

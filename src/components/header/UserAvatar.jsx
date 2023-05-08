@@ -30,7 +30,7 @@ const UserAvatar = () => {
 		content = (
 			<Flex align='center' gap={6}>
 				<Link to='/profile'>
-					<Avatar src={profilePicture} alt={username} radius='xl' />
+					<Avatar src={profilePicture} alt={username} radius='xl' referrerPolicy="no-referrer"/>
 				</Link>
 				<Button onClick={handleLogout} variant='gradient'>
 					Logout

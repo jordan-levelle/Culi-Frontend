@@ -104,8 +104,8 @@ const Nav = () => {
 					</Menu.Target>
 
 					<Menu.Dropdown mt={12}>
-						{items.map((item) => (
-							<Menu.Item key={item.label}>{item}</Menu.Item>
+						{items.map((item, i) => (
+							<Menu.Item key={i}>{item}</Menu.Item>
 						))}
 					</Menu.Dropdown>
 				</Menu>

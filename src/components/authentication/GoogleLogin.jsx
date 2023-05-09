@@ -2,30 +2,21 @@ import { useNavigate } from "react-router-dom";
 
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import {
-	useSendLoginMutation,
-	useLogoutMutation,
-} from "../../app/api/authApiSlice";
+import { useLogoutMutation } from "../../app/api/authApiSlice";
 
 import { Button, Image } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import GoogleLogoUrl from "../../assets/GoogleLogo.svg";
 
-import Spinner from "../Spinner";
-
 const GoogleLogin = () => {
 	const navigate = useNavigate();
 
-	const [sendLogin, { isLoading }] = useSendLoginMutation();
 	const [logout] = useLogoutMutation();
 
 	const loginWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 		try {
-			const result = await signInWithPopup(auth, provider);
-			const data = result.user;
-			const token = await data.getIdToken(true);
-			await sendLogin({ token });
+			await signInWithPopup(auth, provider);
 			navigate("/");
 		} catch (error) {
 			let message = "";
@@ -51,10 +42,6 @@ const GoogleLogin = () => {
 			await logout();
 		}
 	};
-
-	if (isLoading) {
-		return <Spinner />;
-	}
 
 	return (
 		<>

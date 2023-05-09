@@ -1,10 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 
 import { auth } from "../../config/firebase";
-import {
-	useSendLoginMutation,
-	useLogoutMutation,
-} from "../../app/api/authApiSlice";
+import { useLogoutMutation } from "../../app/api/authApiSlice";
 
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {
@@ -21,7 +18,6 @@ import { useForm, isEmail, isNotEmpty } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 
 import Logo from "../Logo";
-import Spinner from "../Spinner";
 
 const useStyles = createStyles((theme) => ({
 	link: {
@@ -45,31 +41,15 @@ const EmailLogin = ({ removeActive }) => {
 		},
 	});
 
-	const [sendLogin, { isLoading }] = useSendLoginMutation();
 	const [logout] = useLogoutMutation();
 
 	const signinWithEmail = async (credentials) => {
 		try {
-			const result = await signInWithEmailAndPassword(
+			await signInWithEmailAndPassword(
 				auth,
 				credentials.email,
 				credentials.password,
 			);
-			const user = result.user;
-			if (!user.emailVerified) {
-				notifications.show({
-					title: "Unverified Email",
-					message: "Please verify your email first before logging in",
-					color: "red",
-					withCloseButton: true,
-					autoClose: 5000,
-				});
-				await signOut(auth);
-				await logout();
-				return;
-			}
-			const token = await user.getIdToken(true);
-			await sendLogin({ token });
 			if (removeActive) {
 				removeActive();
 			}
@@ -102,10 +82,6 @@ const EmailLogin = ({ removeActive }) => {
 			await logout();
 		}
 	};
-
-	if (isLoading) {
-		return <Spinner />;
-	}
 
 	return (
 		<Box

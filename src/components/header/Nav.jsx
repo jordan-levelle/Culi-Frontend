@@ -69,7 +69,6 @@ const useStyles = createStyles((theme) => ({
 
 const links = [
 	{ label: "Home", link: "/" },
-	{ label: "Profile", link: "/profile" },
 ];
 
 const Nav = () => {

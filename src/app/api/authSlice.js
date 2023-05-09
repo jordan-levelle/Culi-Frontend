@@ -3,6 +3,7 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 const initialState = {
 	isAuthenticated: false,
 	uid: "",
+	provider: "",
 	username: "",
 	email: "",
 	profilePicture: "",
@@ -16,6 +17,7 @@ const authSlice = createSlice({
 		setAuth: (state, action) => {
 			state.isAuthenticated = action.payload.verified;
 			state.uid = action.payload.uid;
+			state.provider = action.payload.provider;
 			state.username = action.payload.username;
 			state.email = action.payload.email;
 			state.profilePicture = action.payload.profilePicture;
@@ -24,6 +26,7 @@ const authSlice = createSlice({
 		sendLogout: (state, _action) => {
 			state.isAuthenticated = false;
 			state.uid = "";
+			state.provider = "";
 			state.username = "";
 			state.email = "";
 			state.profilePicture = "";

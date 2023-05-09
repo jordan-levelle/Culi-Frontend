@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { auth } from "../../config/firebase";
 import {
@@ -8,10 +8,11 @@ import {
 
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {
+	createStyles,
 	TextInput,
 	PasswordInput,
 	Button,
-	Group,
+	Text,
 	Box,
 	Title,
 	Flex,
@@ -22,8 +23,16 @@ import { notifications } from "@mantine/notifications";
 import Logo from "../Logo";
 import Spinner from "../Spinner";
 
+const useStyles = createStyles((theme) => ({
+	link: {
+		color: theme.primaryColor,
+		textDecoration: "none",
+	},
+}));
+
 const EmailLogin = ({ removeActive }) => {
 	const navigate = useNavigate();
+	const { classes } = useStyles();
 
 	const form = useForm({
 		initialValues: {
@@ -122,11 +131,14 @@ const EmailLogin = ({ removeActive }) => {
 				{...form.getInputProps("password")}
 			/>
 
-			<Group position='right' mt='md'>
+			<Flex justify='space-between' align='center' mt='md'>
+				<Link to='/forgot' className={classes.link}>
+					<Text fz='sm'>I forgot my password</Text>
+				</Link>
 				<Button type='submit' variant='gradient'>
 					Login
 				</Button>
-			</Group>
+			</Flex>
 		</Box>
 	);
 };

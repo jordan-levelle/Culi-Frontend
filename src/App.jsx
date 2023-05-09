@@ -11,6 +11,7 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import Spinner from "./components/Spinner";
 import Error from "./pages/Error";
+import Forgot from "./pages/Forgot";
 
 const App = () => {
 	const [sendLogin, { isLoading }] = useSendLoginMutation();
@@ -40,6 +41,7 @@ const App = () => {
 				<Route path='/login' element={<Login />}></Route>
 				<Route path='/signup' element={<Signup />}></Route>
 				<Route path='/profile' element={<Profile />}></Route>
+				<Route path='/forgot' element={<Forgot />}></Route>
 			</Route>
 
 			<Route path='*' element={<Error />}></Route>

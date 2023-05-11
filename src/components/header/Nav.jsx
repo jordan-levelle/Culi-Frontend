@@ -90,7 +90,7 @@ const Nav = () => {
 	));
 
 	return (
-		<Header height={60} className='fixed top-0'>
+		<Header height={60} className='sticky top-0'>
 			<Container className={classes.header}>
 				<Menu shadow='lg' onClose={toggle} width='50vw'>
 					<Menu.Target>
